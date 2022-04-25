@@ -1,0 +1,20 @@
+version: '3'
+services:
+  spark:
+    image: spark_experience:v.3.1.2-1.0.0
+    container_name: spark_experience
+    hostname: spark_experience
+    user: root
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - SPARK_LOCAL_HOSTNAME=localhost
+      - NB_GID=100
+      - GRANT_SUDO=yes
+      - PYSPARK_SUBMIT_ARGS=--packages org.apache.hadoop:hadoop-azure:3.2.1,io.delta:delta-core_2.12:1.0.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2,org.apache.spark:spark-avro_2.12:3.1.2 pyspark-shell
+    env_file:
+      - .env
+    ports:
+      - "8888:8888"
+      - "4040-4080:4040-4080"
+    volumes:
+      - ./projects:/home/jovyan/work/projects
